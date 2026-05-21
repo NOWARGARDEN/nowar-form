@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>تقرير زيارة الصيانة — نوّار</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g1:#1a3a2a;--g2:#2d6a4f;--g3:#40916c;--ga:#52b788;--gp:#d8f3dc;
+  --gold:#c9a84c;--gold2:#f0d080;--cream:#f7f4ee;--border:#c5ddc8;
+  --txt:#1a2518;--txt2:#3d5a4a;--txt3:#6b8c7a;--r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:var(--cream);color:var(--txt);min-height:100vh;-webkit-text-size-adjust:100%}
+.hdr{background:linear-gradient(135deg,var(--g1),var(--g2));position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;top:-50px;left:-70px;width:260px;height:260px;border-radius:50%;background:rgba(82,183,136,.12)}
+.hdr-inner{position:relative;z-index:1;display:flex;align-items:center;gap:14px;padding:20px 18px 16px}
+.logo-box{width:50px;height:50px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;box-shadow:0 4px 14px rgba(201,168,76,.35)}
+.hdr-txt h1{color:#fff;font-size:17px;font-weight:900;line-height:1.2}
+.hdr-txt p{color:rgba(255,255,255,.6);font-size:11.5px;margin-top:2px}
+.prog{height:4px;background:rgba(255,255,255,.15)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0;transition:width .35s}
+.tabs{display:flex;background:#fff;border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 10px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{display:flex;align-items:center;gap:5px;padding:11px 12px;font-size:11.5px;font-weight:700;color:var(--txt3);cursor:pointer;white-space:nowrap;border-bottom:2.5px solid transparent;transition:all .2s;flex-shrink:0}
+.tab.active{color:var(--g2);border-bottom-color:var(--g2)}
+.tab.done{color:var(--ga)}
+.tab-dot{width:19px;height:19px;border-radius:50%;background:var(--border);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s}
+.tab.active .tab-dot{background:var(--g2)}
+.tab.done .tab-dot{background:var(--ga)}
+.pg{display:none;padding:16px 14px 110px;max-width:640px;margin:0 auto}
+.pg.on{display:block;animation:fu .22s ease}
+@keyframes fu{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.card{background:#fff;border-radius:var(--r);border:1px solid var(--border);box-shadow:0 2px 12px rgba(26,58,42,.08);margin-bottom:14px;overflow:hidden}
+.ch{display:flex;align-items:center;gap:9px;padding:13px 16px;border-bottom:1px solid var(--border);background:rgba(26,58,42,.025)}
+.ci{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ch h2{font-size:13.5px;font-weight:700;color:var(--g1)}
+.cb{padding:16px}
+.fg{display:grid;gap:5px;margin-bottom:13px}
+.fg:last-child{margin-bottom:0}
+.lb{font-size:12.5px;font-weight:700;color:var(--txt2)}
+.rq{color:#e05a5a;font-size:11px}
+input,select,textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Cairo',sans-serif;font-size:13px;color:var(--txt);background:var(--cream);outline:none;direction:rtl;transition:border-color .2s,background .2s;-webkit-appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--ga);background:#fff;box-shadow:0 0 0 3px rgba(82,183,136,.12)}
+textarea{resize:vertical;min-height:75px;line-height:1.7}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+@media(max-width:400px){.g2{grid-template-columns:1fr}}
+.tg{display:flex;gap:6px;flex-wrap:wrap}
+.tb{flex:1;min-width:68px;padding:9px 10px;border:1.5px solid var(--border);border-radius:9px;background:var(--cream);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;color:var(--txt2);cursor:pointer;text-align:center;transition:all .15s;line-height:1.3}
+.tb:hover{border-color:var(--ga);background:#fff}
+.tb.y{background:linear-gradient(135deg,#e8f7ee,#d0f0de);border-color:var(--ga);color:var(--g1)}
+.tb.n{background:linear-gradient(135deg,#fff0f0,#ffe0e0);border-color:#e87070;color:#b03030}
+.tb.p{background:linear-gradient(135deg,#fff8e0,#ffedb0);border-color:var(--gold);color:#7a5a00}
+.sub{background:rgba(26,58,42,.03);border-right:3px solid var(--ga);border-radius:0 9px 9px 0;padding:12px 13px;margin-top:6px;display:none}
+.sub.on{display:block;animation:fu .2s ease}
+.cl{display:grid;gap:6px}
+.ci2{display:flex;align-items:center;gap:8px;padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;cursor:pointer;background:var(--cream);user-select:none;transition:all .15s}
+.ci2:hover{border-color:var(--ga);background:#fff}
+.ci2 input{width:17px;height:17px;accent-color:var(--g2);cursor:pointer;flex-shrink:0;background:transparent}
+.ci2 span{font-size:12.5px;font-weight:600;color:var(--txt2)}
+.ci2.on{border-color:var(--ga);background:rgba(82,183,136,.07)}
+.ci2.on span{color:var(--g1)}
+.sr{display:flex;align-items:center;gap:3px;margin-top:2px}
+.st{font-size:28px;cursor:pointer;color:#d4d4c0;transition:color .12s,transform .1s;background:none;border:none;padding:1px;line-height:1;-webkit-tap-highlight-color:transparent}
+.st.on{color:var(--gold);transform:scale(1.08)}
+.sl{font-size:12px;color:var(--txt3);margin-right:7px;min-width:72px}
+.sc-panel{background:linear-gradient(135deg,var(--g1),var(--g2));border-radius:var(--r);padding:20px;margin-bottom:14px;color:#fff}
+.sc-top{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.sc-num{font-size:54px;font-weight:900;line-height:1}
+.sc-grade{display:inline-block;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:700;margin-top:6px}
+.ge{background:#ffd700;color:var(--g1)}.gg{background:var(--ga);color:#fff}.ga2{background:#f0a500;color:#fff}.gp2{background:#e05a5a;color:#fff}
+.sc-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+.sc-b{background:rgba(255,255,255,.1);border-radius:9px;padding:9px;text-align:center}
+.sc-bv{font-size:20px;font-weight:800}.sc-bl{font-size:10px;color:rgba(255,255,255,.6);margin-top:2px}
+.ai-box{background:rgba(255,255,255,.08);border-radius:9px;padding:12px;margin-top:12px}
+.ai-lbl{color:var(--gold2);font-size:11px;font-weight:700;margin-bottom:5px}
+.ai-txt{font-size:12.5px;line-height:1.75;color:rgba(255,255,255,.88)}
+.sum-row{display:flex;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;gap:8px}
+.sum-row:last-child{border-bottom:none}
+.sum-k{color:var(--txt3);font-weight:600;min-width:120px;flex-shrink:0}
+.sum-v{color:var(--txt);font-weight:700;flex:1}
+.notif{display:flex;gap:9px;align-items:flex-start;background:linear-gradient(135deg,var(--gp),#fff);border:1px solid var(--ga);border-radius:10px;padding:11px 13px;font-size:12.5px;color:var(--g1);margin-bottom:13px;line-height:1.6}
+.bot{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:10px 14px;display:flex;gap:8px;z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.08)}
+.btn{padding:13px 16px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s;display:flex;align-items:center;gap:6px;justify-content:center;-webkit-tap-highlight-color:transparent}
+.bb{background:#fff;color:var(--g2);border:1.5px solid var(--border);min-width:76px}
+.bn{background:linear-gradient(135deg,var(--g2),var(--g3));color:#fff;flex:1;box-shadow:0 3px 12px rgba(45,106,79,.28)}
+.bw{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;flex:1;font-size:13px}
+.bp{background:linear-gradient(135deg,var(--g2),var(--g3));color:#fff;flex:1;font-size:13px}
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--g1);color:#fff;padding:10px 22px;border-radius:30px;font-size:13px;font-weight:600;z-index:999;transition:transform .3s;white-space:nowrap;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.toast.on{transform:translateX(-50%) translateY(0)}
+.ib{background:#e8f0fe}.ig{background:#e8f7ee}.igo{background:#fff8e0}.ir{background:#fdecea}.ip{background:#f3e8fd}.it{background:#e0f7f4}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:#fff!important}
+  .hdr,.tabs,.bot,.toast,.notif,.pg:not(#pg4),.sc-panel{display:none!important}
+  #pg4{display:block!important;padding:0!important;max-width:100%!important}
+  .card{display:none!important}
+  #pdfDoc{display:block!important}
+  @page{margin:15mm 12mm;size:A4 portrait}
+}
+#pdfDoc{display:none}
+.pdf-wrap{font-family:'Cairo',sans-serif;direction:rtl;color:#1a2518;font-size:11pt;line-height:1.6}
+.pdf-header{background:#1a3a2a;padding:18px 22px;display:flex;align-items:center;gap:14px;border-radius:10px;margin-bottom:16px}
+.pdf-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#c9a84c,#f0d080);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.pdf-htxt h1{color:#fff;font-size:15pt;font-weight:900;margin:0}
+.pdf-htxt p{color:rgba(255,255,255,.65);font-size:9pt;margin-top:2px}
+.pdf-hmeta{margin-right:auto;text-align:left;color:rgba(255,255,255,.75);font-size:9pt}
+.pdf-section{margin-bottom:14px;border:1px solid #c5ddc8;border-radius:9px;overflow:hidden}
+.pdf-sh{background:#2d6a4f;color:#fff;padding:9px 14px;font-size:10pt;font-weight:700}
+.pdf-body{padding:10px 14px}
+.pdf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px}
+.pdf-field{margin-bottom:8px}
+.pdf-field .k{font-size:8.5pt;color:#6b8c7a;font-weight:700;margin-bottom:2px}
+.pdf-field .v{font-size:10pt;font-weight:700;color:#1a2518;padding:5px 10px;background:#f7f4ee;border-radius:6px;min-height:24px}
+.pdf-score-box{background:linear-gradient(135deg,#1a3a2a,#2d6a4f);border-radius:9px;padding:14px 16px;color:#fff;margin-bottom:14px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.pdf-score-num{font-size:46pt;font-weight:900;line-height:1}
+.pdf-score-grade{display:inline-block;padding:3px 12px;border-radius:16px;font-size:11pt;font-weight:700;margin-top:4px}
+.pdf-score-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.pdf-sb{background:rgba(255,255,255,.12);border-radius:7px;padding:7px;text-align:center}
+.pdf-sbv{font-size:14pt;font-weight:900;color:#fff}
+.pdf-sbl{font-size:7.5pt;color:rgba(255,255,255,.65);margin-top:2px}
+.pdf-ai{background:rgba(255,255,255,.1);border-radius:7px;padding:10px;margin-top:10px}
+.pdf-ai-lbl{color:#f0d080;font-size:8.5pt;font-weight:700;margin-bottom:4px}
+.pdf-ai-txt{font-size:9.5pt;color:rgba(255,255,255,.88);line-height:1.6}
+.pdf-works{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.pdf-work-item{display:flex;align-items:center;gap:6px;font-size:9.5pt;padding:4px 0}
+.pdf-check{width:14px;height:14px;border-radius:3px;background:#2d6a4f;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:9pt;flex-shrink:0}
+.pdf-stars{color:#c9a84c;font-size:13pt;letter-spacing:1px}
+.pdf-star-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:9.5pt}
+.pdf-footer{text-align:center;margin-top:16px;padding-top:10px;border-top:1px solid #c5ddc8;color:#6b8c7a;font-size:8pt}
+.badge-g{background:#d8f3dc;color:#1a3a2a}.badge-y{background:#fff8e0;color:#7a5a00}.badge-r{background:#fdecea;color:#b03030}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="logo-box">🌿</div>
+    <div class="hdr-txt">
+      <h1>تقرير زيارة الصيانة</h1>
+      <p id="repNumTop">جاري التحضير...</p>
+    </div>
+  </div>
+  <div class="prog"><div class="prog-fill" id="pFill"></div></div>
+</div>
+<div class="tabs" id="tabsBar">
+  <div class="tab active" onclick="go(0)"><div class="tab-dot">١</div>بيانات</div>
+  <div class="tab" onclick="go(1)"><div class="tab-dot">٢</div>الموقع</div>
+  <div class="tab" onclick="go(2)"><div class="tab-dot">٣</div>الجودة</div>
+  <div class="tab" onclick="go(3)"><div class="tab-dot">٤</div>العميل</div>
+  <div class="tab" onclick="go(4)"><div class="tab-dot">٥</div>الإرسال</div>
+</div>
+<div class="pg on" id="pg0">
+  <div class="notif"><span>📋</span><span>أدخل بيانات الزيارة بدقة — ستظهر في التقرير الرسمي المُرسَل للإدارة.</span></div>
+  <div class="card">
+    <div class="ch"><div class="ci ib">🗂️</div><h2>بيانات الزيارة</h2></div>
+    <div class="cb">
+      <div class="g2">
+        <div class="fg"><label class="lb">التاريخ <span class="rq">*</span></label><input type="date" id="fDate" oninput="cp()"></div>
+        <div class="fg"><label class="lb">رقم التقرير</label><input type="text" id="fRep" readonly style="background:#f0f0eb;color:var(--txt3);font-size:12px"></div>
+      </div>
+      <div class="fg"><label class="lb">اسم المهندس المشرف <span class="rq">*</span></label><input type="text" id="fEng" placeholder="اسمك الكامل" oninput="cp()"></div>
+      <div class="g2">
+        <div class="fg"><label class="lb">الفريق <span class="rq">*</span></label>
+          <select id="fTeam" onchange="cp()">
+            <option value="">— اختر —</option>
+            <option>الفريق الأول (أ)</option><option>الفريق الثاني (ب)</option>
+            <option>الفريق الثالث (ج)</option><option>الفريق الرابع (د)</option><option>فريق طارئ</option>
+          </select>
+        </div>
+        <div class="fg"><label class="lb">عدد أفراد الفريق</label><input type="number" id="fCrew" min="1" max="30" placeholder="عدد العمال"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci it">👤</div><h2>بيانات العميل</h2></div>
+    <div class="cb">
+      <div class="g2">
+        <div class="fg"><label class="lb">اسم العميل <span class="rq">*</span></label><input type="text" id="fClient" placeholder="الاسم الكامل" oninput="cp()"></div>
+        <div class="fg"><label class="lb">رقم الجوال</label><input type="tel" id="fPhone" placeholder="05XXXXXXXX"></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label class="lb">المنطقة / الحي</label><input type="text" id="fDist" placeholder="الحي"></div>
+        <div class="fg"><label class="lb">رقم العقد</label><input type="text" id="fCont" placeholder="رقم العقد" oninput="cp()"></div>
+      </div>
+      <div class="fg"><label class="lb">حضور العميل</label>
+        <div class="tg">
+          <button class="tb" onclick="tog(this,'cPres','y')">✅ حاضر</button>
+          <button class="tb" onclick="tog(this,'cPres','n')">❌ غائب</button>
+          <button class="tb" onclick="tog(this,'cPres','p')">⚠️ مندوبه</button>
+        </div><input type="hidden" id="cPres">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pg" id="pg1">
+  <div class="card">
+    <div class="ch"><div class="ci ig">🏡</div><h2>تقييم الموقع</h2></div>
+    <div class="cb">
+      <div class="fg"><label class="lb">الحالة العامة عند الوصول</label>
+        <select id="fCond"><option value="">— اختر —</option><option>ممتازة — نظيفة ومرتبة</option><option>جيدة — تحتاج صيانة عادية</option><option>متوسطة — تحتاج عناية أكثر</option><option>سيئة — تحتاج تدخل عاجل</option></select>
+      </div>
+      <div class="g2">
+        <div class="fg"><label class="lb">مدة العمل في الموقع</label>
+          <select id="fDur"><option value="">— اختر —</option><option>أقل من 30 دقيقة</option><option>30 – 60 دقيقة</option><option>1 – 2 ساعة</option><option>2 – 3 ساعات</option><option>أكثر من 3 ساعات</option></select>
+        </div>
+        <div class="fg"><label class="lb">وقت الوصول</label><input type="time" id="fTime"></div>
+      </div>
+      <div class="fg"><label class="lb">ملاحظات الموقع</label><textarea id="fSite" placeholder="صف الحالة العامة..."></textarea></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci ig">✅</div><h2>الأعمال المنجزة</h2></div>
+    <div class="cb">
+      <div class="cl" id="wList">
+        <label class="ci2"><input type="checkbox" onchange="chk(this)"><span>🌱 تقليم الأشجار والشجيرات</span></label>
+        <label class="ci2"><input type="checkbox" onchange="chk(this)"><span>🌿 قص وتسوية العشب</span></label>
+        <label class="ci2"><input type="checkbox" onchange="chk(this)"><span>💧 فحص وصيانة نظام الري</span></label>
+        <label class="ci2"><input type="checkbox" onchange="chk(this)"><span>🌺 زراعة نباتات موسمية</span></label>
+        <label class="ci2"><input type="checkbox" onchange="chk(this)"><span>🧹 تنظيف الممرات والمساطب</span></label>
+        <label class="ci2"><input type="checkbox" onchange="chk(this)"><span>🪴 تسميد وتغذية التربة</span></label>
+        <label class="ci2"><input type="checkbox" onchange="chk(this)"><span>🐛 رش مبيدات / علاج أمراض</span></label>
+        <label class="ci2"><input type="checkbox" onchange="chk(this)"><span>💡 صيانة إنارة الحديقة</span></label>
+        <label class="ci2"><input type="checkbox" onchange="chk(this)"><span>🪨 صيانة الديكورات والحجارة</span></label>
+        <label class="ci2"><input type="checkbox" onchange="chk(this)"><span>🌊 تنظيف بحيرة / نافورة</span></label>
+      </div>
+      <div class="fg" style="margin-top:12px"><label class="lb">أعمال لم تكتمل — السبب</label><textarea id="fInc" placeholder="اذكر ما لم يُنجز وسبب ذلك..."></textarea></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci ir">💧</div><h2>الري والنباتات</h2></div>
+    <div class="cb">
+      <div class="fg"><label class="lb">حالة نظام الري</label>
+        <div class="tg"><button class="tb" onclick="tog(this,'irr','y')">✅ سليم</button><button class="tb" onclick="tog(this,'irr','p')">⚠️ جزئي</button><button class="tb" onclick="tog(this,'irr','n')">❌ معطل</button></div>
+        <input type="hidden" id="irr">
+        <div class="sub" id="sub-irr-p"><textarea id="fIrrP" placeholder="وصف الخلل الجزئي..."></textarea></div>
+        <div class="sub" id="sub-irr-n"><textarea id="fIrrN" placeholder="تفاصيل العطل والإجراء المتخذ..."></textarea></div>
+      </div>
+      <div class="fg"><label class="lb">نباتات مريضة أو جافة؟</label>
+        <div class="tg"><button class="tb" onclick="tog(this,'sick','y')">✅ نعم</button><button class="tb" onclick="tog(this,'sick','n')">❌ لا</button></div>
+        <input type="hidden" id="sick">
+        <div class="sub" id="sub-sick-y"><textarea id="fSick" placeholder="حدد النباتات المتأثرة والعلاج المقترح..."></textarea></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci ir">🦺</div><h2>السلامة والمعدات</h2></div>
+    <div class="cb">
+      <div class="fg"><label class="lb">الالتزام بمعايير السلامة</label>
+        <div class="tg"><button class="tb" onclick="tog(this,'safe','y')">✅ ملتزمون</button><button class="tb" onclick="tog(this,'safe','p')">⚠️ جزئياً</button><button class="tb" onclick="tog(this,'safe','n')">❌ لا</button></div>
+        <input type="hidden" id="safe">
+        <div class="sub" id="sub-safe-n"><textarea id="fSafeN" placeholder="اذكر المخالفة وما تم اتخاذه..."></textarea></div>
+        <div class="sub" id="sub-safe-p"><textarea id="fSafeP" placeholder="اذكر ما لم يُلتزم به..."></textarea></div>
+      </div>
+      <div class="fg"><label class="lb">معدات تالفة؟</label>
+        <div class="tg"><button class="tb" onclick="tog(this,'equip','y')">✅ نعم</button><button class="tb" onclick="tog(this,'equip','n')">❌ لا — سليمة</button></div>
+        <input type="hidden" id="equip">
+        <div class="sub" id="sub-equip-y"><textarea id="fEquip" placeholder="اذكر المعدة وطبيعة العطل..."></textarea></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pg" id="pg2">
+  <div class="card">
+    <div class="ch"><div class="ci igo">⭐</div><h2>تقييم جودة العمل</h2></div>
+    <div class="cb">
+      <p style="font-size:12px;color:var(--txt3);margin-bottom:13px">قيّم كل بند من ١ إلى ٥ نجوم</p>
+      <div style="display:grid;gap:13px">
+        <div class="fg"><label class="lb">نظافة وترتيب الحديقة بعد الصيانة</label><div class="sr"><div id="r1" data-v="0"><button class="st" onclick="rate('r1',1)">★</button><button class="st" onclick="rate('r1',2)">★</button><button class="st" onclick="rate('r1',3)">★</button><button class="st" onclick="rate('r1',4)">★</button><button class="st" onclick="rate('r1',5)">★</button></div><span class="sl" id="r1l">—</span></div></div>
+        <div class="fg"><label class="lb">جودة أعمال التقليم والقص</label><div class="sr"><div id="r2" data-v="0"><button class="st" onclick="rate('r2',1)">★</button><button class="st" onclick="rate('r2',2)">★</button><button class="st" onclick="rate('r2',3)">★</button><button class="st" onclick="rate('r2',4)">★</button><button class="st" onclick="rate('r2',5)">★</button></div><span class="sl" id="r2l">—</span></div></div>
+        <div class="fg"><label class="lb">كفاءة وأداء الفريق</label><div class="sr"><div id="r3" data-v="0"><button class="st" onclick="rate('r3',1)">★</button><button class="st" onclick="rate('r3',2)">★</button><button class="st" onclick="rate('r3',3)">★</button><button class="st" onclick="rate('r3',4)">★</button><button class="st" onclick="rate('r3',5)">★</button></div><span class="sl" id="r3l">—</span></div></div>
+        <div class="fg"><label class="lb">الالتزام بالوقت</label><div class="sr"><div id="r4" data-v="0"><button class="st" onclick="rate('r4',1)">★</button><button class="st" onclick="rate('r4',2)">★</button><button class="st" onclick="rate('r4',3)">★</button><button class="st" onclick="rate('r4',4)">★</button><button class="st" onclick="rate('r4',5)">★</button></div><span class="sl" id="r4l">—</span></div></div>
+        <div class="fg"><label class="lb">صحة وحيوية النباتات</label><div class="sr"><div id="r5" data-v="0"><button class="st" onclick="rate('r5',1)">★</button><button class="st" onclick="rate('r5',2)">★</button><button class="st" onclick="rate('r5',3)">★</button><button class="st" onclick="rate('r5',4)">★</button><button class="st" onclick="rate('r5',5)">★</button></div><span class="sl" id="r5l">—</span></div></div>
+      </div>
+      <div class="fg" style="margin-top:13px"><label class="lb">ملاحظات إضافية على الجودة</label><textarea id="fQual" placeholder="أي ملاحظات إضافية..."></textarea></div>
+    </div>
+  </div>
+</div>
+<div class="pg" id="pg3">
+  <div class="card">
+    <div class="ch"><div class="ci ip">😊</div><h2>رضا العميل</h2></div>
+    <div class="cb">
+      <div class="fg"><label class="lb">مستوى رضا العميل <span class="rq">*</span></label>
+        <div class="tg">
+          <button class="tb" onclick="tog(this,'sat','y');cp()">🌟 ممتاز</button>
+          <button class="tb" onclick="tog(this,'sat','p');cp()">👍 جيد</button>
+          <button class="tb" onclick="tog(this,'sat','n');cp()">👎 غير راضٍ</button>
+        </div><input type="hidden" id="sat">
+      </div>
+      <div class="fg"><label class="lb">خدمات إضافية مطلوبة؟</label>
+        <div class="tg"><button class="tb" onclick="tog(this,'extra','y')">✅ نعم</button><button class="tb" onclick="tog(this,'extra','n')">❌ لا</button></div>
+        <input type="hidden" id="extra">
+        <div class="sub" id="sub-extra-y"><textarea id="fExtra" placeholder="اذكر الخدمات الإضافية المطلوبة..."></textarea></div>
+      </div>
+      <div class="fg"><label class="lb">شكاوى من العميل؟</label>
+        <div class="tg"><button class="tb" onclick="tog(this,'comp','y')">✅ نعم</button><button class="tb" onclick="tog(this,'comp','n')">❌ لا</button></div>
+        <input type="hidden" id="comp">
+        <div class="sub" id="sub-comp-y"><textarea id="fComp" placeholder="اذكر الشكوى وحالة معالجتها..."></textarea></div>
+      </div>
+      <div class="fg"><label class="lb">ملاحظات العميل (بكلماته)</label><textarea id="fCmt" placeholder="ما قاله العميل..."></textarea></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci igo">📅</div><h2>الخطوات القادمة</h2></div>
+    <div class="cb">
+      <div class="fg"><label class="lb">موعد الزيارة القادمة</label><input type="date" id="fNext"></div>
+      <div class="fg"><label class="lb">الأعمال المقررة للزيارة القادمة</label><textarea id="fNextW" placeholder="ما يجب تنفيذه..."></textarea></div>
+      <div class="fg"><label class="lb">توصية الفريق للإدارة</label>
+        <select id="fRec"><option value="">— اختر —</option><option>عميل ممتاز — يُوصى بتطوير الخدمة</option><option>عميل جيد — استمرار الخدمة الحالية</option><option>يحتاج متابعة خاصة من الإدارة</option><option>عميل في خطر — احتمال إلغاء العقد</option></select>
+      </div>
+      <div class="fg"><label class="lb">ملاحظات ختامية للإدارة</label><textarea id="fFinal" placeholder="أي معلومات إضافية للإدارة..."></textarea></div>
+    </div>
+  </div>
+</div>
+<div class="pg" id="pg4">
+  <div class="sc-panel" id="scPanel">
+    <div class="sc-top">
+      <div class="sc-num" id="sTot">—</div>
+      <div><div style="color:rgba(255,255,255,.7);font-size:11px">تقييم أداء الزيارة</div><div class="sc-grade" id="sGrade">—</div></div>
+    </div>
+    <div class="sc-bars">
+      <div class="sc-b"><div class="sc-bv" id="sQ">—</div><div class="sc-bl">جودة الأعمال</div></div>
+      <div class="sc-b"><div class="sc-bv" id="sSt">—</div><div class="sc-bl">رضا العميل</div></div>
+      <div class="sc-b"><div class="sc-bv" id="sCo">—</div><div class="sc-bl">الالتزام</div></div>
+    </div>
+    <div class="ai-box"><div class="ai-lbl">🤖 التحليل الذكي</div><div class="ai-txt" id="aiTxt">—</div></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ci ig">📋</div><h2>ملخص التقرير</h2></div>
+    <div class="cb" id="sumBox"></div>
+  </div>
+  <div class="notif"><span>📄</span><span>اضغط <b>تحميل PDF</b> لحفظ التقرير، ثم <b>إرسال واتساب</b> لإبلاغ الإدارة وحفظه في السجل.</span></div>
+</div>
+<div id="pdfDoc"><div class="pdf-wrap" id="pdfContent"></div></div>
+<div class="bot">
+  <button class="btn bb" id="btnBack" onclick="prev()" style="display:none">← رجوع</button>
+  <button class="btn bn" id="btnNext" onclick="next()">التالي ←</button>
+  <button class="btn bp" id="btnPdf" onclick="genPdf()" style="display:none">📄 PDF</button>
+  <button class="btn bw" id="btnWa" onclick="sendWA()" style="display:none">📱 إرسال واتساب</button>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const WA='966555988298';
+const SHEETS_URL='https://script.google.com/macros/s/AKfycbxt5VsV7k-SoUhZ6PFODy-jTp4m_HHo7e4M2eUp6HOdm40Ug_UgwnfjXZYysjgbSNV0/exec';
+let cur=0;
+const d=new Date();
+document.getElementById('fDate').value=d.toISOString().split('T')[0];
+const rep='NOWAR-'+d.getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000);
+document.getElementById('fRep').value=rep;
+document.getElementById('repNumTop').textContent=rep;
+const v=id=>(document.getElementById(id)||{}).value||'';
+const rv=id=>parseInt((document.getElementById(id)||{dataset:{v:'0'}}).dataset.v)||0;
+function cp(){const f=[v('fDate'),v('fEng'),v('fTeam'),v('fClient'),v('fCont')];document.getElementById('pFill').style.width=Math.round(f.filter(x=>x).length/f.length*100)+'%';}
+function tog(btn,key,val){btn.parentElement.querySelectorAll('.tb').forEach(b=>b.classList.remove('y','n','p'));btn.classList.add(val);document.getElementById(key).value=val;['y','n','p'].forEach(v=>{const s=document.getElementById('sub-'+key+'-'+v);if(s)s.classList.toggle('on',v===val)});cp();}
+function chk(cb){cb.closest('.ci2').classList.toggle('on',cb.checked)}
+const rl=['','ضعيف جداً','ضعيف','مقبول','جيد','ممتاز'];
+function rate(id,val){const c=document.getElementById(id);c.dataset.v=val;c.querySelectorAll('.st').forEach((s,i)=>s.classList.toggle('on',i<val));document.getElementById(id+'l').textContent='★'.repeat(val)+'  '+rl[val];}
+function go(n){if(n===4)buildSummary();document.querySelectorAll('.pg').forEach((p,i)=>p.classList.toggle('on',i===n));document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.remove('active','done');if(i===n)t.classList.add('active');else if(i<n)t.classList.add('done')});cur=n;document.getElementById('btnBack').style.display=n>0?'flex':'none';document.getElementById('btnNext').style.display=n<4?'flex':'none';document.getElementById('btnPdf').style.display=n===4?'flex':'none';document.getElementById('btnWa').style.display=n===4?'flex':'none';window.scrollTo({top:0,behavior:'smooth'});}
+function next(){if(cur===0&&(!v('fEng')||!v('fClient'))){toast('⚠️ أدخل اسم المهندس والعميل');return}if(cur<4)go(cur+1);}
+function prev(){if(cur>0)go(cur-1)}
+function calcScore(){const rs=['r1','r2','r3','r4','r5'].map(r=>rv(r));const avgR=rs.reduce((a,b)=>a+b,0)/5;const qS=Math.round((avgR/5)*100);const done=document.querySelectorAll('#wList input:checked').length;const compS=Math.round((done/10)*100);const sat=v('sat');const stS=sat==='y'?100:sat==='p'?60:sat==='n'?20:50;const safe=v('safe');const sfS=safe==='y'?100:safe==='p'?60:safe==='n'?20:70;const irr=v('irr');const irS=irr==='y'?100:irr==='p'?60:irr==='n'?30:70;const coS=Math.round((sfS+irS)/2);const tot=Math.round(qS*.35+compS*.10+stS*.30+coS*.25);let gr,gc,ai;if(tot>=85){gr='🌟 ممتاز';gc='ge';ai='أداء الفريق ممتاز. معدل الجودة '+qS+'% ورضا العميل '+(stS===100?'مرتفع جداً':'جيد')+'. يُنصح بالاستمرار في هذا المستوى.'}else if(tot>=70){gr='👍 جيد';gc='gg';ai='أداء جيد. '+(stS<70?'يُنصح بتعزيز رضا العميل. ':'')+(coS<70?'مراجعة إجراءات السلامة مطلوبة.':'')}else if(tot>=55){gr='⚠️ مقبول';gc='ga2';ai='الأداء مقبول لكن يحتاج تحسين. '+(sat==='n'?'رضا العميل منخفض ويستدعي متابعة فورية.':'')}else{gr='🔴 ضعيف';gc='gp2';ai='الأداء دون المستوى ('+tot+'%). يستدعي تدخل الإدارة وجلسة مراجعة مع الفريق خلال 48 ساعة.'}return{tot,qS,stS,coS,compS,gr,gc,ai,rs};}
+function buildSummary(){const s=calcScore();let c=0;const tm=setInterval(()=>{c=Math.min(c+2,s.tot);document.getElementById('sTot').textContent=c+'%';if(c>=s.tot)clearInterval(tm)},16);const g=document.getElementById('sGrade');g.textContent=s.gr;g.className='sc-grade '+s.gc;document.getElementById('sQ').textContent=s.qS+'%';document.getElementById('sSt').textContent=s.stS+'%';document.getElementById('sCo').textContent=s.coS+'%';document.getElementById('aiTxt').textContent=s.ai;const done=[...document.querySelectorAll('#wList input:checked')].map(c=>c.nextElementSibling.textContent.trim());const satT=v('sat')==='y'?'🌟 ممتاز':v('sat')==='p'?'👍 جيد':v('sat')==='n'?'👎 غير راضٍ':'—';document.getElementById('sumBox').innerHTML='<div class="sum-row"><span class="sum-k">المهندس</span><span class="sum-v">'+v('fEng')+'</span></div><div class="sum-row"><span class="sum-k">الفريق</span><span class="sum-v">'+v('fTeam')+' '+(v('fCrew')?'('+v('fCrew')+' أفراد)':'')+'</span></div><div class="sum-row"><span class="sum-k">العميل</span><span class="sum-v">'+v('fClient')+'</span></div><div class="sum-row"><span class="sum-k">رقم العقد</span><span class="sum-v">'+(v('fCont')||'—')+'</span></div><div class="sum-row"><span class="sum-k">المنطقة</span><span class="sum-v">'+(v('fDist')||'—')+'</span></div><div class="sum-row"><span class="sum-k">الأعمال المنجزة</span><span class="sum-v">'+(done.length?done.join(' • '):'—')+'</span></div><div class="sum-row"><span class="sum-k">رضا العميل</span><span class="sum-v">'+satT+'</span></div><div class="sum-row"><span class="sum-k">الزيارة القادمة</span><span class="sum-v">'+(v('fNext')||'—')+'</span></div><div class="sum-row"><span class="sum-k">التوصية</span><span class="sum-v">'+(v('fRec')||'—')+'</span></div>';buildPdf(s,done,satT);}
+function buildPdf(s,done,satT){const irrT=v('irr')==='y'?'✅ سليم':v('irr')==='p'?'⚠️ جزئي':v('irr')==='n'?'❌ معطل':'—';const safeT=v('safe')==='y'?'✅ ملتزمون':v('safe')==='p'?'⚠️ جزئياً':v('safe')==='n'?'❌ مخالفة':'—';const presT=v('cPres')==='y'?'حاضر':v('cPres')==='n'?'غائب':'مندوبه';const gradeClass=s.gc==='ge'||s.gc==='gg'?'badge-g':s.gc==='ga2'?'badge-y':'badge-r';const starNames=['نظافة وترتيب الحديقة','جودة التقليم والقص','كفاءة الفريق','الالتزام بالوقت','صحة النباتات'];const starsHtml=starNames.map((n,i)=>'<div class="pdf-star-row"><span style="min-width:160px;color:#3d5a4a;font-weight:700">'+n+'</span><span class="pdf-stars">'+'★'.repeat(s.rs[i])+'☆'.repeat(5-s.rs[i])+'</span><span style="color:#6b8c7a;font-size:9pt;margin-right:6px">'+(rl[s.rs[i]]||'—')+'</span></div>').join('');const worksHtml=done.map(w=>'<div class="pdf-work-item"><div class="pdf-check">✓</div>'+w+'</div>').join('');document.getElementById('pdfContent').innerHTML='<div class="pdf-header"><div class="pdf-logo-box">🌿</div><div class="pdf-htxt"><h1>تقرير زيارة الصيانة</h1><p>قسم رعاية وصيانة الحدائق — نوّار</p></div><div class="pdf-hmeta"><div>'+v('fRep')+'</div><div>'+v('fDate')+'</div></div></div><div class="pdf-score-box"><div><div class="pdf-score-num">'+s.tot+'%</div><div class="pdf-score-grade '+gradeClass+'">'+s.gr+'</div></div><div><div class="pdf-score-bars"><div class="pdf-sb"><div class="pdf-sbv">'+s.qS+'%</div><div class="pdf-sbl">جودة الأعمال</div></div><div class="pdf-sb"><div class="pdf-sbv">'+s.stS+'%</div><div class="pdf-sbl">رضا العميل</div></div><div class="pdf-sb"><div class="pdf-sbv">'+s.coS+'%</div><div class="pdf-sbl">الالتزام</div></div></div><div class="pdf-ai"><div class="pdf-ai-lbl">🤖 التحليل الذكي</div><div class="pdf-ai-txt">'+s.ai+'</div></div></div></div><div class="pdf-section"><div class="pdf-sh">🗂️ بيانات الزيارة والعميل</div><div class="pdf-body"><div class="pdf-grid"><div class="pdf-field"><div class="k">المهندس المشرف</div><div class="v">'+v('fEng')+'</div></div><div class="pdf-field"><div class="k">الفريق</div><div class="v">'+v('fTeam')+' '+(v('fCrew')?'('+v('fCrew')+' أفراد)':'')+'</div></div><div class="pdf-field"><div class="k">اسم العميل</div><div class="v">'+v('fClient')+'</div></div><div class="pdf-field"><div class="k">رقم الجوال</div><div class="v">'+(v('fPhone')||'—')+'</div></div><div class="pdf-field"><div class="k">المنطقة / الحي</div><div class="v">'+(v('fDist')||'—')+'</div></div><div class="pdf-field"><div class="k">رقم العقد</div><div class="v">'+(v('fCont')||'—')+'</div></div><div class="pdf-field"><div class="k">حضور العميل</div><div class="v">'+presT+'</div></div><div class="pdf-field"><div class="k">مدة العمل</div><div class="v">'+(v('fDur')||'—')+'</div></div></div>'+(v('fSite')?'<div class="pdf-field" style="margin-top:8px"><div class="k">ملاحظات الموقع</div><div class="v">'+v('fSite')+'</div></div>':'')+'</div></div><div class="pdf-section"><div class="pdf-sh">✅ الأعمال المنجزة ('+done.length+' من 10)</div><div class="pdf-body"><div class="pdf-works">'+(worksHtml||'<span style="color:#6b8c7a">لا يوجد أعمال محددة</span>')+'</div>'+(v('fInc')?'<div class="pdf-field" style="margin-top:10px"><div class="k">⚠️ أعمال لم تكتمل</div><div class="v">'+v('fInc')+'</div></div>':'')+'</div></div><div class="pdf-section"><div class="pdf-sh">⭐ تقييم جودة العمل</div><div class="pdf-body">'+starsHtml+(v('fQual')?'<div class="pdf-field" style="margin-top:8px"><div class="k">ملاحظات الجودة</div><div class="v">'+v('fQual')+'</div></div>':'')+'</div></div><div class="pdf-section"><div class="pdf-sh">💧 الري والسلامة</div><div class="pdf-body"><div class="pdf-grid"><div class="pdf-field"><div class="k">نظام الري</div><div class="v">'+irrT+'</div></div><div class="pdf-field"><div class="k">السلامة</div><div class="v">'+safeT+'</div></div><div class="pdf-field"><div class="k">نباتات مريضة</div><div class="v">'+(v('sick')==='y'?'⚠️ نعم':'✅ لا')+'</div></div><div class="pdf-field"><div class="k">معدات تالفة</div><div class="v">'+(v('equip')==='y'?'⚠️ نعم':'✅ لا')+'</div></div></div></div></div><div class="pdf-section"><div class="pdf-sh">😊 رضا العميل والخطوات القادمة</div><div class="pdf-body"><div class="pdf-grid"><div class="pdf-field"><div class="k">مستوى الرضا</div><div class="v">'+satT+'</div></div><div class="pdf-field"><div class="k">الزيارة القادمة</div><div class="v">'+(v('fNext')||'—')+'</div></div></div>'+(v('fNextW')?'<div class="pdf-field"><div class="k">أعمال الزيارة القادمة</div><div class="v">'+v('fNextW')+'</div></div>':'')+(v('fRec')?'<div class="pdf-field"><div class="k">توصية الفريق</div><div class="v">'+v('fRec')+'</div></div>':'')+(v('fFinal')?'<div class="pdf-field"><div class="k">ملاحظات ختامية</div><div class="v">'+v('fFinal')+'</div></div>':'')+'</div></div><div class="pdf-footer">تم إنشاء هذا التقرير بتاريخ '+new Date().toLocaleDateString('ar-SA',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'<br>نوّار لرعاية وصيانة الحدائق — NOWAR</div>';}
+function genPdf(){if(!v('fClient')){toast('⚠️ أكمل البيانات الأساسية أولاً');return}toast('📄 جاري تحضير PDF...');setTimeout(()=>window.print(),400);}
+async function sendToSheets(payload){try{await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});return true;}catch(err){return false;}}
+async function sendWA(){const s=calcScore();const done=[...document.querySelectorAll('#wList input:checked')].map(c=>c.nextElementSibling.textContent.trim());const satT=v('sat')==='y'?'🌟 ممتاز — راضٍ جداً':v('sat')==='p'?'👍 جيد — راضٍ نسبياً':v('sat')==='n'?'👎 غير راضٍ':'—';const irrT=v('irr')==='y'?'✅ سليم':v('irr')==='p'?'⚠️ جزئي':v('irr')==='n'?'❌ معطل':'—';const safeT=v('safe')==='y'?'✅ ملتزمون':v('safe')==='p'?'⚠️ جزئياً':v('safe')==='n'?'❌ مخالفة':'—';toast('⏳ جاري الحفظ في السجل...');const payload={reportNum:v('fRep'),visitDate:v('fDate'),engineerName:v('fEng'),teamName:v('fTeam'),crewCount:v('fCrew'),clientName:v('fClient'),clientPhone:v('fPhone'),contractNum:v('fCont'),district:v('fDist'),clientPresent:v('cPres')==='y'?'حاضر':v('cPres')==='n'?'غائب':'مندوبه',siteCondition:v('fCond'),visitDuration:v('fDur'),completedWorks:done.join(' | '),incompleteWork:v('fInc'),irrigation:irrT,sickPlants:v('sick')==='y'?'نعم':'لا',safety:safeT,equipment:v('equip')==='y'?'نعم':'لا',qualityScore:s.qS+'%',satisfaction:satT,totalScore:String(s.tot),grade:s.gr,aiAnalysis:s.ai,extraServices:v('fExtra')||'لا',complaints:v('fComp')||'لا',nextVisit:v('fNext'),nextWorkPlan:v('fNextW'),recommendation:v('fRec'),finalNotes:v('fFinal')};const saved=await sendToSheets(payload);const msg='🌿 *تقرير زيارة صيانة — نوّار*\n━━━━━━━━━━━━━━━━━\n📋 *'+v('fRep')+'* | 📅 '+v('fDate')+'\n━━━━━━━━━━━━━━━━━\n👷 *المهندس:* '+v('fEng')+'\n👥 *الفريق:* '+v('fTeam')+' '+(v('fCrew')?'('+v('fCrew')+' أفراد)':'')+'\n🏡 *العميل:* '+v('fClient')+'\n📍 *المنطقة:* '+(v('fDist')||'—')+' | 📄 *العقد:* '+(v('fCont')||'—')+'\n━━━━━━━━━━━━━━━━━\n✅ *الأعمال ('+done.length+'/10):*\n'+(done.map(w=>'   • '+w).join('\n')||'   —')+'\n━━━━━━━━━━━━━━━━━\n⭐ *الجودة:* '+s.qS+'% | 💧 *الري:* '+irrT+' | 🦺 *السلامة:* '+safeT+'\n😊 *رضا العميل:* '+satT+'\n━━━━━━━━━━━━━━━━━\n📊 *درجة الأداء:* '+s.tot+'% — '+s.gr+'\n🤖 '+s.ai+'\n━━━━━━━━━━━━━━━━━\n📅 *الزيارة القادمة:* '+(v('fNext')||'—')+'\n💼 *التوصية:* '+(v('fRec')||'—')+'\n'+(v('fFinal')?'📝 '+v('fFinal'):'')+'\n'+(saved?'✅ تم الحفظ في سجل نوّار':'')+'\n_نوّار — نظام متابعة الصيانة_';window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank');toast(saved?'✅ تم الحفظ في Sheets وإرسال الواتساب!':'✅ تم إرسال الواتساب');}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3000);}
+cp();
+</script>
+</body>
+</html>
